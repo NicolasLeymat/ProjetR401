@@ -1,13 +1,6 @@
 <?php
     /// Librairies éventuelles (pour la connexion à la BDD, etc.)
     include('jwt_utils.php');
-
-    try {
-		$mysqlConnection = new PDO('mysql:host=mysql-sauceblog.alwaysdata.net;dbname=sauceblog_blog;charset=utf8','sauceblog_root','SauceBlogRoot');
-	}
-	catch (Exception $e){
-		die('Erreur : ' . $e->getMessage());
-	}
     
     /// Paramétrage de l'entête HTTP (pour la réponse au Client)
     header("Content-Type:application/json");
@@ -37,7 +30,8 @@
 
                 $jwt = generate_jwt($headers,$payload);
                 initialiserSession($jwt);
-                header('Location: ../MainPage.html');
+                //echo $_SESSION['jwt'];
+                header('Location: ../MainPage.php');
 
         }
             /// Traitement
