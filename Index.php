@@ -19,8 +19,8 @@
     </head>
     <body>
     <?php
+        require('./php/bdConnect.php');
         include('./php/jwt_utils.php');
-        include('./php/bdConnect.php');
         include('./php/utils.php');
         initialiserSessionInit();
         if($_SESSION['jwt'] == null || !is_jwt_valid($_SESSION['jwt'])){
@@ -126,18 +126,17 @@
                 <tbody>
                     <?php
                         //echo $token;
-                        var_dump($payloadSessionToken);
-                        var_dump($_SESSION['jwt']);
-                        var_dump(is_jwt_valid($_SESSION['jwt']));
+                        //var_dump($payloadSessionToken);
+                        //var_dump($_SESSION['jwt']);
+                        //var_dump(is_jwt_valid($_SESSION['jwt']));
                         $result = file_get_contents('http://localhost/ProjetR401/php/ServeurBlog.php',
                         true,
                         stream_context_create(array('http' => array('method' => 'GET', 'header' => "Authorization: Bearer $token\r\n" . "Content-Type: application/json\r\n"))) // ou DELETE
                         );
                         $data = json_decode($result, true);
-                        //var_dump($data);
+                        var_dump($data);
                         foreach($data['data'] as $articles){
-                        
-                        $date = date_format(date_create($articles['Publi']),"Y/m/d H:i:s");
+                            $date = date_format(date_create($articles['Publi']),"Y/m/d H:i:s");
                     ?>
                         <tr>
                             <td><?php echo $articles['Titre']; ?><td>
