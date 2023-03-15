@@ -13,7 +13,7 @@ function generate_jwt($headers, $payload, $secret = 'SAUCER') {
 	return $jwt;
 }
 
-function is_jwt_valid($jwt, $secret = 'secret') {
+function is_jwt_valid($jwt, $secret = 'SAUCER') {
 	// split the jwt
 	$tokenParts = explode('.', $jwt);
 	$header = base64_decode($tokenParts[0]);
@@ -38,6 +38,18 @@ function is_jwt_valid($jwt, $secret = 'secret') {
 	} else {
 		return TRUE;
 	}
+}
+
+function get_payload($token){
+		
+	if(is_jwt_valid($token)){
+		$tokenParts = explode('.', $token);
+		$payload['data'] = base64_decode($tokenParts[1]);
+		$payload =json_decode($payload['data'], true);
+
+		return $payload;
+	}
+	return null;
 }
 
 function base64url_encode($data) {

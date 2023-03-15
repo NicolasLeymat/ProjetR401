@@ -18,6 +18,28 @@
     <title>Dark Chat</title>
     </head>
     <body>
+    <?php
+        include('./php/jwt_utils.php');
+        include('./php/bdConnect.php');
+        include('./php/utils.php');
+        initialiserSessionInit();
+        if($_SESSION['jwt'] == null || !is_jwt_valid($_SESSION['jwt'])){
+            $headers = array('alg'=>'HS256', 'typ'=>'JWT');
+            $payload = array('id_utilisateur'=>-1, 'username'=>'Anonymous', 'role'=>'Anonymous', 'exp'=>(time()+3600));
+            $jwt = generate_jwt($headers,$payload);
+            if($_SESSION['jwt'] == null){
+                initialiserSession($jwt);
+                echo $_SESSION['jwt'];
+            }else{
+                $_SESSION['jwt'] = $jwt;
+            }
+            echo $_SESSION['jwt'];
+        }
+        $token = $_SESSION['jwt'];
+        $payloadSessionToken = get_payload($token);
+        //var_dump($payloadSessionToken);
+
+    ?>
     <!--  HEADER  -->
     <header class="header" id="header">
         <nav class="nav container">
@@ -65,10 +87,26 @@
             <i class="uil uil-times nav_close" id="nav-close"></i>
             </div>
             <div class="nav_btns">
-            <i class="uil uil-moon change-theme" id="theme-button"></i>
-            <div class="nav_toggle" id="nav-toggle">
-                <i class="uil uil-apps"></i>
-            </div>
+                <?php
+                    //echo $payloadSessionToken;
+                    $role = $payloadSessionToken['role'];
+                    if($role == 'Anonymous'){
+
+                ?>
+                    <a href="./Connexion.html" class="nav_link">
+                        Sign in
+                    </a>
+                <?php
+                    }else{
+                ?>
+                    <a href="./php/Disconnect.php"><i class="uil uil-signout"></i></a>
+                <?php
+                    }
+                ?>
+                <i class="uil uil-moon change-theme" id="theme-button"></i>
+                <div class="nav_toggle" id="nav-toggle">
+                    <i class="uil uil-apps"></i>
+                </div>
             </div>
         </nav>
         </header>
@@ -77,20 +115,42 @@
     <main class="main">
         <!-- HOME -->
         <section class="home section" id="home">
-        <div class="home_container container flex vertical">
-            <div class="home_content title flex">
-            <a href="./Index.html" class="nav_logo title">Dark Chat</a>
-            </div>
-            <div class="home_content_form flex">
-            <form action="./MainPage.html" method="post" class="form">
-                <label for="identifiant" class="label"> Identifiant : <br><input type="text" name="identifiant" id="id" class="form_input" placeholder="Identifiant"></label><br>
-                <label for="pwd" class="label"> Mot de passe : <br><input type="text" name="pwd" id="pwd" class="form_input" placeholder="password"></label><br>
-                <input type="submit" value="Connexion" class="button button--flex log_btn">
-            </form>
-            </div>
-            <div class="btnSignUp"><a href="./SignUp.html" class="nav_logo title">Vous n'avez pas de compte inscrivez-vous</a></div>
-            <div class="pwdForgotten"><a href="./ForgotPwd.html" class="nav_logo title">Mot de passe oublié ?</a></div>
-        </div>
+            <table>
+                <thead>
+                    <th scope="col">Titre de l'article</th>
+                    <th scope="col">Createur</th>
+                    <th scope="col">Date de publication</th>
+                    <th scope="col">Like</th>
+                    <th scope="col">Dislike</th>
+                </thead>
+                <tbody>
+                    <?php
+                        //echo $token;
+                        var_dump($payloadSessionToken);
+                        var_dump($_SESSION['jwt']);
+                        var_dump(is_jwt_valid($_SESSION['jwt']));
+                        $result = file_get_contents('http://localhost/ProjetR401/php/ServeurBlog.php',
+                        true,
+                        stream_context_create(array('http' => array('method' => 'GET', 'header' => "Authorization: Bearer $token\r\n" . "Content-Type: application/json\r\n"))) // ou DELETE
+                        );
+                        $data = json_decode($result, true);
+                        //var_dump($data);
+                        foreach($data['data'] as $articles){
+                        
+                        $date = date_format(date_create($articles['Publi']),"Y/m/d H:i:s");
+                    ?>
+                        <tr>
+                            <td><?php echo $articles['Titre']; ?><td>
+                            <td><?php echo $articles['NomAut']; ?><td>
+                            <td><?php echo $date;?><td>
+                            <td> <i class="uil uil-thumbs-up"></i> <?php echo $articles['NbLike']; ?><td>
+                            <td> <i class="uil uil-thumbs-down"></i> <?php echo $articles['NbDislike']; ?><td>
+                        </tr>
+                    <?php
+                        }
+                    ?>
+                </tbody>
+            </table>
         </section>
         <!-- HOME FIN -->
     </main>
@@ -143,5 +203,5 @@
     <script src="assets/js/swiper-bundle.min.js"></script>
     <!--  MAIN JS  -->
     <script src="assets/js/main.js"></script>
-    </body>
-    </html>
+</body>
+</html>

@@ -1,6 +1,7 @@
 <?php
     /// Librairies éventuelles (pour la connexion à la BDD, etc.)
     include('jwt_utils.php');
+    require('bdConnect.php');
     
     /// Paramétrage de l'entête HTTP (pour la réponse au Client)
     header("Content-Type:application/json");
@@ -16,8 +17,6 @@
             $req = $mysqlConnection->prepare('select id_utilisateur, identifiant, password, id_role from utilisateur where identifiant = ?');
             $req->execute(array($_POST['identifiant']));
             $matchingData = $req->fetch();
-            
-        
             if ($_POST['identifiant'] == $matchingData['identifiant'] && $_POST['pwd'] == $matchingData['password']){
                 $reqrole = $mysqlConnection->prepare('select id_role, denomination from role where id_role = ?');
                 $reqrole->execute(array($matchingData['id_role']));
@@ -29,16 +28,15 @@
                 $payload = array('id_utilisateur'=>$matchingData['id_utilisateur'], 'username'=>$username, 'role'=>$roleData['denomination'], 'exp'=>(time()+3600));
 
                 $jwt = generate_jwt($headers,$payload);
-                initialiserSession($jwt);
+                reinitialiserSession($jwt);
                 //echo $_SESSION['jwt'];
-                header('Location: ../MainPage.php');
-
-        }
+                $requestHeader = 'Location:../Index.php';
+                header($requestHeader);
+            }
             /// Traitement
             /// Envoi de la réponse au Client
             //deliver_response(201, "Votre message", $jwt);
             break;
-            /// Cas de la méthode PUT
         
         }
     
@@ -55,11 +53,15 @@
         echo $json_response;
     }
 
-    function initialiserSession($jwt) : bool {
-		if(!session_id()){
-			session_start();
-            $_SESSION['jwt'] = $jwt;
+    function reinitialiserSession($jwt) : bool {
+        
+        if($_SESSION['jwt'] != null){
+            unset($_SESSION['jwt']);
+        }
+        if(!session_id()){
+            session_start();
 			session_regenerate_id()	;
+            $_SESSION['jwt'] = $jwt;
 			return true;	
 		}
 		return false;
