@@ -31,10 +31,7 @@
 		}
 	}
 
-
-
-
-
+    //Retourne un article a partir de son id
 	function get_content($id){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("SELECT titre, date_publication, contenu, id_utilisateur FROM articles WHERE id_article = :id");
@@ -43,7 +40,7 @@
         $data = $req->fetch();
         return $data;
     }
-
+    //Retourne un auteur a partir de son id
     function get_author($id){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("SELECT identifiant FROM utilisateur WHERE id_utilisateur = :id");
@@ -52,13 +49,14 @@
         $data = $req->fetch();
         return $data;
     }
-
+    //Supprime un article a partir de son id
     function delete_article($id){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("DELETE FROM articles WHERE id_article = :id");
         $req->bindParam(':id', $id, PDO::PARAM_INT);
         $res=$req->execute();
     }
+    //Supprime un like d'un utilisateur sur un article
     function delete_like($id_article, $id_utilisateur){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("DELETE FROM liker WHERE id_article = :id_article and id_utilisateur = :id_utilisateur");
@@ -66,7 +64,7 @@
         $req->bindParam(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
         $res=$req->execute();
     }
-
+    //Supprime un dislike d'un utilisateur sur un article
     function delete_dislike($id_article, $id_utilisateur){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("DELETE FROM disliker WHERE id_article = :id_article and id_utilisateur = :id_utilisateur");
@@ -75,7 +73,7 @@
 		var_dump($req);
         $res=$req->execute();
     }
-
+    //
     function get_users_like_article($id_article){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("SELECT u.id_utilisateur, u.identifiant FROM utilisateurs u, liker l, articles a WHERE
@@ -154,12 +152,19 @@
         $data = $req->fetchAll();
         return $data;
     }
-
+    //Modifie le contenu d'un article a partir de son id
     function update_article($id_article, $contenu){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("UPDATE article set contenu = :contenu WHERE id_article = :id");
         $req->bindParam(':contenu', $contenu, PDO::PARAM_STR);
         $req->bindParam(':id', $id_article, PDO::PARAM_INT);
+        $res=$req->execute();
+        if ($res == 1){
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
 
     function add_like($id_user, $id_article){
