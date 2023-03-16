@@ -11,9 +11,9 @@
     />
 
     <!--  SWIPER CSS  -->
-    <link rel="stylesheet" href="../assets/css/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
     <!--  CSS  -->
-    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
 
     <title>Dark Chat</title>
     </head>
@@ -85,29 +85,14 @@
 
 
             <?php
-                function get_content($titre){
-                    include("bdConnect.php");
-                    $req = $mysqlConnection->prepare("SELECT * FROM articles WHERE titre = :titre");
-                    $req->bindParam(':titre', $titre, PDO::PARAM_STR);
-                    $res=$req->execute();
-                    $data = $req->fetch();
-                    return $data;
-                }
+                require("php/utils.php");
 
-                function get_author($id){
-                    include("bdConnect.php");
-                    $req = $mysqlConnection->prepare("SELECT identifiant FROM articles WHERE id_utilisateur = :id");
-                    $req->bindParam(':id', $$id, PDO::PARAM_INT);
-                    $res=$req->execute();
-                    $data = $req->fetch();
-                    return $data['identifiant'];
-                }
-
-                $var = get_content("Lucas aime la sauce");
+                $date = date('Y-m-d H:i:s');
 
 
-                echo $var['titre'];
-                echo $var['contenu'];
+                insert_article("Please","ahahha",1);
+
+
 
 
 
