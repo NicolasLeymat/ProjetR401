@@ -55,6 +55,12 @@
         $req = $mysqlConnection->prepare("DELETE FROM articles WHERE id_article = :id");
         $req->bindParam(':id', $id, PDO::PARAM_INT);
         $res=$req->execute();
+        if ($res == 1){
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
     //Supprime un like d'un utilisateur sur un article
     function delete_like($id_article, $id_utilisateur){
@@ -155,7 +161,7 @@
     //Modifie le contenu d'un article a partir de son id
     function update_article($id_article, $contenu){
         include("bdConnect.php");
-        $req = $mysqlConnection->prepare("UPDATE article set contenu = :contenu WHERE id_article = :id");
+        $req = $mysqlConnection->prepare("UPDATE articles set contenu = :contenu WHERE id_article = :id");
         $req->bindParam(':contenu', $contenu, PDO::PARAM_STR);
         $req->bindParam(':id', $id_article, PDO::PARAM_INT);
         $res=$req->execute();
