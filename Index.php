@@ -127,7 +127,7 @@
                     <?php
                         //echo $token;
                         //var_dump($payloadSessionToken);
-                        //var_dump($_SESSION['jwt']);
+                        var_dump($_SESSION['jwt']);
                         //var_dump(is_jwt_valid($_SESSION['jwt']));
                         $result = file_get_contents('http://localhost/ProjetR401/php/ServeurBlog.php',
                         true,

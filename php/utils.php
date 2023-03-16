@@ -137,6 +137,12 @@
         $req->bindParam(':contenu', $contenu, PDO::PARAM_STR);
         $req->bindParam(':id_user', $id_user, PDO::PARAM_INT);
         $res=$req->execute();
+        if ($res == 1){
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
 
     function get_user_articles($id_user){

@@ -90,7 +90,8 @@
                 $date = date('Y-m-d H:i:s');
 
 
-                insert_article("Please","ahahha",1);
+                $res = insert_article(0,"ahahha","SDSDSD");
+                echo $res;
 
 
 
