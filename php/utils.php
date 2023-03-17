@@ -52,10 +52,17 @@
     //Supprime un article a partir de son id
     function delete_article($id){
         include("bdConnect.php");
+        $req1 = $mysqlConnection->prepare("DELETE FROM liker WHERE id_article = :id");
+        $req2 = $mysqlConnection->prepare("DELETE FROM disliker WHERE id_article = :id");
+        $req1->bindParam(':id', $id, PDO::PARAM_INT);
+        $req2->bindParam(':id', $id, PDO::PARAM_INT);
+        $res1=$req1->execute();
+        $res2=$req2->execute();
+
         $req = $mysqlConnection->prepare("DELETE FROM articles WHERE id_article = :id");
         $req->bindParam(':id', $id, PDO::PARAM_INT);
         $res=$req->execute();
-        if ($res == 1){
+        if ($res == 1 && $res1 == 1 && $res2 == 2){
             return 1;
         }
         else {
@@ -91,7 +98,7 @@
             return -1;
         }
     }
-    //
+    //Retourne tous les utilisateurs qui ont liké un article
     function get_users_like_article($id_article){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("SELECT u.id_utilisateur, u.identifiant FROM utilisateurs u, liker l, articles a WHERE
@@ -101,7 +108,7 @@
         $data = $req->fetchAll();
         return $data;
     }
-
+    //Retourne tous les utilisateurs qui ont like un article
     function get_users_dislike_article($id_article){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("SELECT u.id_utilisateur, u.identifiant FROM utilisateurs u, disliker d, articles a WHERE
@@ -111,7 +118,7 @@
         $data = $req->fetchAll();
         return $data;
     }
-
+    //Verifie si l'utilisateur a liké ou non un article
 	function check_user_like_article($id_user, $id_article){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("SELECT count(1) as verif FROM utilisateurs u, liker l, articles a WHERE
@@ -127,7 +134,7 @@
 			return 0;
 		}
     }
-
+    //Verifie si l'utilisateur a disliké ou non un article
 	function check_user_dislike_article($id_user, $id_article){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("SELECT count(1) as verif FROM utilisateurs u, disliker l, articles a WHERE
@@ -145,7 +152,8 @@
     }
 
     //count($data) pour compter le nombre de like et le nombre de dislike
-
+    
+    //Ajoute un article
     function insert_article($titre, $contenu, $id_user){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("INSERT INTO articles(titre, contenu, id_utilisateur) values (:titre, :contenu, :id_user)");
@@ -160,7 +168,7 @@
             return -1;
         }
     }
-
+    //Retourne tous les articles qu'un utilisateur a liké
     function get_user_articles($id_user){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("SELECT a.id_user FROM articles a, utilisateur u WHERE
@@ -184,7 +192,7 @@
             return -1;
         }
     }
-
+    //Ajoute un like a un article
     function add_like($id_user, $id_article){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("INSERT INTO liker values (:id_article, :id_user)");
@@ -198,7 +206,7 @@
             return -1;
         }
     }
-
+    //Ajoute un dislike a un article
     function add_dislike($id_user, $id_article){
         include("bdConnect.php");
         $req = $mysqlConnection->prepare("INSERT INTO disliker values (:id_article, :id_user)");
@@ -212,8 +220,11 @@
             return -1;
         }
     }
-
+    //Ajoute un like si il n'existe pas déjà et enlève un dislike si il existe
 	function like($id_user, $id_article){
+        if (check_user_like_article($id_user,$id_article) == 0){
+            return 0;
+        }
 		$res1 = delete_dislike($id_user, $id_article);
 		$res2 = add_like($id_user, $id_article);
         if ($res1 == 1 && $res2 == 1){
@@ -223,8 +234,11 @@
             return -1;
         }
 	}
-
+    //Ajoute un dislike si il n'existe pas déjà et enlève un like si il existe
 	function dislike($id_user, $id_article){
+        if (check_user_dislike_article($id_user,$id_article) == 0){
+            return 0;
+        }
 		$res1 = delete_like($id_user, $id_article);
 		$res2 = add_dislike($id_user, $id_article);
         if ($res1 == 1 && $res2 == 1){
