@@ -69,6 +69,12 @@
         $req->bindParam(':id_article', $id_article, PDO::PARAM_INT);
         $req->bindParam(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
         $res=$req->execute();
+        if ($res == 1){
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
     //Supprime un dislike d'un utilisateur sur un article
     function delete_dislike($id_article, $id_utilisateur){
@@ -78,6 +84,12 @@
         $req->bindParam(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
 		var_dump($req);
         $res=$req->execute();
+        if ($res == 1){
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
     //
     function get_users_like_article($id_article){
@@ -179,6 +191,12 @@
         $req->bindParam(':id_article', $id_article, PDO::PARAM_INT);
         $req->bindParam(':id_user', $id_user, PDO::PARAM_INT);
         $res=$req->execute();
+        if ($res == 1){
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
 
     function add_dislike($id_user, $id_article){
@@ -187,16 +205,34 @@
         $req->bindParam(':id_article', $id_article, PDO::PARAM_INT);
         $req->bindParam(':id_user', $id_user, PDO::PARAM_INT);
         $res=$req->execute();
+        if ($res == 1){
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
 
 	function like($id_user, $id_article){
-		delete_dislike($id_user, $id_article);
-		add_like($id_user, $id_article);
+		$res1 = delete_dislike($id_user, $id_article);
+		$res2 = add_like($id_user, $id_article);
+        if ($res1 == 1 && $res2 == 1){
+            return 1;
+        }
+        else {
+            return -1;
+        }
 	}
 
 	function dislike($id_user, $id_article){
-		delete_like($id_user, $id_article);
-		add_dislike($id_user, $id_article);
+		$res1 = delete_like($id_user, $id_article);
+		$res2 = add_dislike($id_user, $id_article);
+        if ($res1 == 1 && $res2 == 1){
+            return 1;
+        }
+        else {
+            return -1;
+        }
 	}
 
 ?>
