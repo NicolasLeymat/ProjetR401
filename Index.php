@@ -4,19 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!--  UNICONS  -->
-    <link
-        rel="stylesheet"
-        href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
-    />
-
-    <!--  SWIPER CSS  -->
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+    
     <!--  CSS  -->
     <link rel="stylesheet" href="assets/css/styles.css" />
 
-    <title>Dark Chat</title>
+    <!--  UNICONS  -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    
+    <link rel="shortcut icon" href="#">
+    <title>Sauce Blog</title>
     </head>
+
+    <style>
+        tr[data-href]{
+            cursor:pointer;
+        }
+    </style>
+
     <body>
     <?php
         require('./php/bdConnect.php');
@@ -29,7 +33,7 @@
             $jwt = generate_jwt($headers,$payload);
             if($_SESSION['jwt'] == null){
                 initialiserSession($jwt);
-                echo $_SESSION['jwt'];
+                //echo $_SESSION['jwt'];
             }else{
                 $_SESSION['jwt'] = $jwt;
             }
@@ -44,43 +48,13 @@
     <header class="header" id="header">
         <nav class="nav container">
             <a href="#" class="nav_logo"
-            >Leymat <br />
-            Nicolas</a
+            >Sauce blog</a
             >
             <div class="nav_menu" id="nav-menu">
             <ul class="nav_list grid">
                 <li class="nav_item">
-                <a href="#home" class="nav_link active-link">
+                <a href="./Index.php" class="nav_link active-link">
                     <i class="uil uil-estate nav_icon"></i> Home
-                </a>
-                </li>
-
-                <li class="nav_item">
-                <a href="#about" class="nav_link">
-                    <i class="uil uil-user nav_icon"></i> About
-                </a>
-                </li>
-
-                <li class="nav_item">
-                <a href="#skills" class="nav_link">
-                    <i class="uil uil-file-alt nav_icon"></i> Skills
-                </a>
-                </li>
-
-                <li class="nav_item">
-                <a href="#services" class="nav_link">
-                    <i class="uil uil-briefcase-alt nav_icon"></i> Services
-                </a>
-                </li>
-
-                <li class="nav_item">
-                <a href="#portfolio" class="nav_link">
-                    <i class="uil uil-scenery nav_icon"></i> Portfolio
-                </a>
-                </li>
-                <li class="nav_item">
-                <a href="#contact" class="nav_link">
-                    <i class="uil uil-message nav_icon"></i> Contact Me
                 </a>
                 </li>
             </ul>
@@ -115,35 +89,67 @@
     <main class="main">
         <!-- HOME -->
         <section class="home section" id="home">
-            <table>
-                <thead>
-                    <th scope="col">Titre de l'article</th>
-                    <th scope="col">Createur</th>
-                    <th scope="col">Date de publication</th>
-                    <th scope="col">Like</th>
-                    <th scope="col">Dislike</th>
+            
+            <?php 
+                if($payloadSessionToken['role'] == 'Anonymous'){
+            ?>
+                <div class="flexConnxInfo">
+                    <h3 class="titreConnx"> Bonjour vous etes connecter en tant que : <?php echo $payloadSessionToken["username"];?></h3>
+                </div>
+            <?php
+                }
+            ?>
+
+            <?php 
+                if($payloadSessionToken['role'] == 'Moderateur'){
+            ?>
+                <div class="flexConnxInfo">
+                    <h3 class="titreConnx"> Bonjour vous etes connecter en tant que : <?php echo $payloadSessionToken["username"];?></h3>
+                </div>
+            <?php
+                }
+            ?>
+
+            <?php 
+                if($payloadSessionToken['role'] == 'Publisher'){
+            ?>
+                <div class="flexConnxInfo">
+                    <h3 class="titreConnx"> Bonjour vous etes connecter en tant que : <?php echo $payloadSessionToken["username"];?></h3>
+                    <button class="buttonAdd" id="addButton" data-href=<?php echo "./newArticle.php?id=".$payloadSessionToken["id_utilisateur"];?>> Créer un post</button>
+                </div>
+            <?php
+                }
+            ?>
+
+            <table class="table">
+                <thead class="thead">
+                    <th scope="col" class="th_30">Titre de l'article</th>
+                    <th scope="col" class="th_30">Createur</th>
+                    <th scope="col" class="th_30">Date de publication</th>
+                    <th scope="col" class="th_5">Like</th>
+                    <th scope="col" class="th_5">Dislike</th>
                 </thead>
-                <tbody>
+                <tbody class="tbody">
                     <?php
                         //echo $token;
-                        //var_dump($payloadSessionToken);
-                        var_dump($_SESSION['jwt']);
+                        var_dump($payloadSessionToken);
+                        //var_dump($_SESSION['jwt']);
                         //var_dump(is_jwt_valid($_SESSION['jwt']));
                         $result = file_get_contents('http://localhost/ProjetR401/php/ServeurBlog.php',
                         true,
                         stream_context_create(array('http' => array('method' => 'GET', 'header' => "Authorization: Bearer $token\r\n" . "Content-Type: application/json\r\n"))) // ou DELETE
                         );
                         $data = json_decode($result, true);
-                        var_dump($data);
+                        //var_dump($data);
                         foreach($data['data'] as $articles){
                             $date = date_format(date_create($articles['Publi']),"Y/m/d H:i:s");
                     ?>
-                        <tr>
-                            <td><?php echo $articles['Titre']; ?><td>
-                            <td><?php echo $articles['NomAut']; ?><td>
-                            <td><?php echo $date;?><td>
-                            <td> <i class="uil uil-thumbs-up"></i> <?php echo $articles['NbLike']; ?><td>
-                            <td> <i class="uil uil-thumbs-down"></i> <?php echo $articles['NbDislike']; ?><td>
+                        <tr class="tr" data-href=<?php echo "./Article.php?id=".$articles['id_article']?>>
+                                <td class="td_30"><?php echo $articles['Titre']; ?></td>
+                                <td class="td_30"><?php echo $articles['NomAut']; ?></td>
+                                <td class="td_30"><?php echo $date;?></td>
+                                <td class="td_5"> <i class="uil uil-thumbs-up"></i> <?php echo $articles['NbLike']; ?></td>
+                                <td class="td_5"> <i class="uil uil-thumbs-down"></i> <?php echo $articles['NbDislike']; ?></td>
                         </tr>
                     <?php
                         }
@@ -198,9 +204,23 @@
     </a>
     <!-- SCROLL TOP FIN -->
 
-    <!--  SWIPER JS  -->
-    <script src="assets/js/swiper-bundle.min.js"></script>
     <!--  MAIN JS  -->
     <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rows = document.querySelectorAll("tr[data-href]");
+
+            let addBtn = document.getElementById("addButton");
+
+            if(addBtn != null){
+                addBtn.addEventListener("click", () => {window.location.href = addBtn.dataset.href;});
+            }
+
+            rows.forEach(row => {
+                row.addEventListener("click", () => {window.location.href = row.dataset.href;});
+            });
+        });
+
+    </script>
 </body>
 </html>

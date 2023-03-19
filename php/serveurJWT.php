@@ -12,12 +12,12 @@
         
         case "POST" :
             
-            
             //Execute la requete
             $req = $mysqlConnection->prepare('select id_utilisateur, identifiant, password, id_role from utilisateur where identifiant = ?');
             $req->execute(array($_POST['identifiant']));
             $matchingData = $req->fetch();
-            if ($_POST['identifiant'] == $matchingData['identifiant'] && $_POST['pwd'] == $matchingData['password']){
+            //echo password_hash($_POST['pwd'], PASSWORD_DEFAULT, ["cost" => 12]);
+            if ($_POST['identifiant'] == $matchingData['identifiant'] && password_verify($_POST['pwd'], $matchingData['password'])){
                 $reqrole = $mysqlConnection->prepare('select id_role, denomination from role where id_role = ?');
                 $reqrole->execute(array($matchingData['id_role']));
                 

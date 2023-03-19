@@ -15,7 +15,7 @@
     <!--  CSS  -->
     <link rel="stylesheet" href="assets/css/styles.css" />
 
-    <title>Dark Chat</title>
+    <title>Sauce Blog</title>
     </head>
     <body>
     <!--  HEADER  -->
@@ -28,47 +28,34 @@
             <div class="nav_menu" id="nav-menu">
             <ul class="nav_list grid">
                 <li class="nav_item">
-                <a href="#home" class="nav_link active-link">
+                <a href="./Index.php" class="nav_link active-link">
                     <i class="uil uil-estate nav_icon"></i> Home
-                </a>
-                </li>
-
-                <li class="nav_item">
-                <a href="#about" class="nav_link">
-                    <i class="uil uil-user nav_icon"></i> About
-                </a>
-                </li>
-
-                <li class="nav_item">
-                <a href="#skills" class="nav_link">
-                    <i class="uil uil-file-alt nav_icon"></i> Skills
-                </a>
-                </li>
-
-                <li class="nav_item">
-                <a href="#services" class="nav_link">
-                    <i class="uil uil-briefcase-alt nav_icon"></i> Services
-                </a>
-                </li>
-
-                <li class="nav_item">
-                <a href="#portfolio" class="nav_link">
-                    <i class="uil uil-scenery nav_icon"></i> Portfolio
-                </a>
-                </li>
-                <li class="nav_item">
-                <a href="#contact" class="nav_link">
-                    <i class="uil uil-message nav_icon"></i> Contact Me
                 </a>
                 </li>
             </ul>
             <i class="uil uil-times nav_close" id="nav-close"></i>
             </div>
             <div class="nav_btns">
-            <i class="uil uil-moon change-theme" id="theme-button"></i>
-            <div class="nav_toggle" id="nav-toggle">
-                <i class="uil uil-apps"></i>
-            </div>
+                <?php
+                    //echo $payloadSessionToken;
+                    $role = $payloadSessionToken['role'];
+                    if($role == 'Anonymous'){
+
+                ?>
+                    <a href="./Connexion.html" class="nav_link">
+                        Sign in
+                    </a>
+                <?php
+                    }else{
+                ?>
+                    <a href="./php/Disconnect.php"><i class="uil uil-signout"></i></a>
+                <?php
+                    }
+                ?>
+                <i class="uil uil-moon change-theme" id="theme-button"></i>
+                <div class="nav_toggle" id="nav-toggle">
+                    <i class="uil uil-apps"></i>
+                </div>
             </div>
         </nav>
         </header>
@@ -87,11 +74,11 @@
             <?php
                 require("php/utils.php");
 
-                $date = date('Y-m-d H:i:s');
+                //$date = date('Y-m-d H:i:s');
 
 
-                $res = insert_article(0,"ahahha","SDSDSD");
-                echo $res;
+                //$res = insert_article(0,"ahahha","SDSDSD");
+                //echo $res;
 
 
 
