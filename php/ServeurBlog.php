@@ -28,10 +28,9 @@
             /// Cas de la méthode GET
             case "GET" :
                 /// Récupération des critères de recherche envoyés par le Client
-                    $req = $mysqlConnection->prepare("SELECT * FROM articles");
-                    $req->execute();
+                    $res = get_articles();
                     $matchingData = array();
-                    while($articles = $req->fetch()){
+                    foreach($res as $articles){
 
                         $utilisateur = get_author($articles['id_utilisateur']);
                         $nbDislike = count_dislike($articles['id_article']);
