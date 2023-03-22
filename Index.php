@@ -67,7 +67,7 @@
                     if($role == 'Anonymous'){
 
                 ?>
-                    <a href="./Connexion.html" class="nav_link">
+                    <a href="./Connexion.php" class="nav_link">
                         Sign in
                     </a>
                 <?php
@@ -137,7 +137,7 @@
                         //var_dump(is_jwt_valid($_SESSION['jwt']));
                         $result = file_get_contents('http://localhost/ProjetR401/php/ServeurBlog.php',
                         true,
-                        stream_context_create(array('http' => array('method' => 'GET', 'header' => "Authorization: Bearer $token\r\n" . "Content-Type: application/json\r\n"))) // ou DELETE
+                        stream_context_create(array('http' => array('method' => 'GET', 'header' => "Authorization: Bearer $token\r\n" . "Content-Type: application/json\r\n". "REQUEST_TYPE: Tab"))) // ou DELETE
                         );
                         $data = json_decode($result, true);
                         //var_dump($data);

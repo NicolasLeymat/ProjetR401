@@ -16,7 +16,6 @@
             $req = $mysqlConnection->prepare('select id_utilisateur, identifiant, password, id_role from utilisateur where identifiant = ?');
             $req->execute(array($_POST['identifiant']));
             $matchingData = $req->fetch();
-            //echo password_hash($_POST['pwd'], PASSWORD_DEFAULT, ["cost" => 12]);
             if ($_POST['identifiant'] == $matchingData['identifiant'] && password_verify($_POST['pwd'], $matchingData['password'])){
                 $reqrole = $mysqlConnection->prepare('select id_role, denomination from role where id_role = ?');
                 $reqrole->execute(array($matchingData['id_role']));
@@ -32,10 +31,9 @@
                 //echo $_SESSION['jwt'];
                 $requestHeader = 'Location:../Index.php';
                 header($requestHeader);
+            }else{
+                header('Location:../Connexion.php?error=true');
             }
-            /// Traitement
-            /// Envoi de la réponse au Client
-            //deliver_response(201, "Votre message", $jwt);
             break;
         
         }

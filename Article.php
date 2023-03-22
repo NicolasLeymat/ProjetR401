@@ -18,6 +18,28 @@
     <title>Sauce Blog</title>
     </head>
     <body>
+    <?php
+        require('./php/bdConnect.php');
+        include('./php/jwt_utils.php');
+        include('./php/utils.php');
+        initialiserSessionInit();
+        if($_SESSION['jwt'] == null || !is_jwt_valid($_SESSION['jwt'])){
+            $headers = array('alg'=>'HS256', 'typ'=>'JWT');
+            $payload = array('id_utilisateur'=>-1, 'username'=>'Anonymous', 'role'=>'Anonymous', 'exp'=>(time()+3600));
+            $jwt = generate_jwt($headers,$payload);
+            if($_SESSION['jwt'] == null){
+                initialiserSession($jwt);
+                //echo $_SESSION['jwt'];
+            }else{
+                $_SESSION['jwt'] = $jwt;
+            }
+            //echo $_SESSION['jwt'];
+        }
+        $token = $_SESSION['jwt'];
+        $payloadSessionToken = get_payload($token);
+        //var_dump($payloadSessionToken);
+
+    ?>
     <!--  HEADER  -->
     <header class="header" id="header">
         <nav class="nav container">
