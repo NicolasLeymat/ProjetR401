@@ -32,18 +32,10 @@
                     $req->execute();
                     $matchingData = array();
                     while($articles = $req->fetch()){
-                        $reqUtilisateur = $mysqlConnection->prepare('SELECT * FROM utilisateur WHERE id_utilisateur = ' . $articles['id_utilisateur']);
-                        $reqUtilisateur->execute();
-                        $utilisateur = $reqUtilisateur->fetch();
-                        
-                        $reqDislike = $mysqlConnection->prepare('SELECT count(*) as nbDislike FROM disliker WHERE id_article = ?');
-                        $reqDislike->execute(array($articles['id_article']));
-                        $nbDislike = $reqDislike->fetch();
-                        
-                        $reqLike = $mysqlConnection->prepare('SELECT count(*) as nbLike FROM liker WHERE id_article = ' . $articles['id_article']);
-                        $reqLike->execute();
-                        $nbLike = $reqLike->fetch();
-                        
+
+                        $utilisateur = get_author($articles['id_utilisateur']);
+                        $nbDislike = count_dislike($articles['id_article']);
+                        $nbLike = count_like($articles['id_article']);
 
                         if($tokenData['role'] == 'Anonymous'){
                             $a = array( "id_article" => $articles['id_article'],

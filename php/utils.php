@@ -1,5 +1,4 @@
 <?php
-
 	function initialiserSessionInit() : bool {
 		if(!session_id()){
 			session_start();
@@ -43,7 +42,7 @@
     //Retourne un auteur a partir de son id
     function get_author($id){
         include("bdConnect.php");
-        $req = $mysqlConnection->prepare("SELECT identifiant FROM utilisateur WHERE id_utilisateur = :id");
+        $req = $mysqlConnection->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :id");
         $req->bindParam(':id', $id, PDO::PARAM_INT);
         $res=$req->execute();
         $data = $req->fetch();
@@ -151,7 +150,25 @@
 		}
     }
 
-    //count($data) pour compter le nombre de like et le nombre de dislike
+    //Compte le nombre de likes
+    function count_like($id){
+        include("bdConnect.php");
+        $req = $mysqlConnection->prepare('SELECT count(*) as nbLike FROM liker WHERE id_article = :id');
+        $req->bindParam(':id', $id, PDO::PARAM_INT);
+        $res = $req->execute();
+        $data = $req->fetch();
+        return $data;
+    }
+
+    //Compte le nombre de dislikes
+    function count_dislike($id){
+        include("bdConnect.php");
+        $req = $mysqlConnection->prepare('SELECT count(*) as nbDislike FROM disliker WHERE id_article = :id');
+        $req->bindParam(':id', $id, PDO::PARAM_INT);
+        $res = $req->execute();
+        $data = $req->fetch();
+        return $data;
+    }
     
     //Ajoute un article
     function insert_article($titre, $contenu, $id_user){
@@ -220,6 +237,16 @@
             return -1;
         }
     }
+
+     //Recupère tous les articles
+    function get_articles(){
+        include("bdConnect.php");
+        $req = $mysqlConnection->prepare("SELECT * FROM articles");
+        $res = $req->execute();
+        $data = $req->fetchAll();
+        return $data;
+    }
+
     //Ajoute un like si il n'existe pas déjà et enlève un dislike si il existe
 	function like($id_user, $id_article){
         if (check_user_like_article($id_user,$id_article) == 0){
