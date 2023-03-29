@@ -57,7 +57,7 @@
                         
                         array_push($matchingData,$a); 
                     }
-                }else{
+                }else if($http_type === "Art"){
                     $matchingData = get_content($headers['ID']);
                 }
 

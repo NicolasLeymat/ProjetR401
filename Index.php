@@ -131,7 +131,7 @@
                 </thead>
                 <tbody class="tbody">
                     <?php
-                        //echo $token;
+                        echo $token;
                         //var_dump($payloadSessionToken);
                         //var_dump($_SESSION['jwt']);
                         //var_dump(is_jwt_valid($_SESSION['jwt']));
@@ -166,8 +166,8 @@
         <div class="footer_bg">
         <div class="footer_container container grid">
             <div>
-            <h1 class="footer_title">Nicolas</h1>
-            <span class="footer_subtitle">Développeur</span>
+            <h1 class="footer_title">Sauce</h1>
+            <span class="footer_subtitle">Blog</span>
             </div>
 
             <ul class="footer_links">
