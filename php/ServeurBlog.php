@@ -30,6 +30,7 @@
             case "GET" :
                 /// Récupération des critères de recherche envoyés par le Client
                 //echo($_SERVER['REQUEST_TYPE']);
+                //Recuperation de tout les articles
                 if($http_type === "Tab"){
                     $res = get_articles();
                     $matchingData = array();
@@ -57,14 +58,19 @@
                         
                         array_push($matchingData,$a); 
                     }
+                //Recuperation d'un article precis
                 }else if($http_type === "Art"){
                     $matchingData = get_content($headers['ID']);
+                    $author = array("author" => "".get_author($matchingData['id_utilisateur']));
+                    array_push($matchingData,$author);
+                }else{
+                    deliver_response(404, "demande inconnu", null);
                 }
 
                 /// Envoi de la réponse au Client
                 deliver_response(200, "Votre message", $matchingData);
                 break;
-            /// Cas de la méthode POST
+            /// Cas de la méthode d'ajout d'un article
             case "POST" :
                 $postedData = file_get_contents('php://input');
                 $res = json_decode($postedData, true);
