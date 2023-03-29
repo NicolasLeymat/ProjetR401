@@ -36,7 +36,7 @@
         $req = $mysqlConnection->prepare("SELECT titre, date_publication, contenu, id_utilisateur FROM articles WHERE id_article = :id");
         $req->bindParam(':id', $id, PDO::PARAM_INT);
         $res=$req->execute();
-        $data = $req->fetch();
+        $data = $req->fetch(PDO::FETCH_ASSOC);
         return $data;
     }
     //Retourne un auteur a partir de son id
@@ -45,7 +45,7 @@
         $req = $mysqlConnection->prepare("SELECT * FROM utilisateur WHERE id_utilisateur = :id");
         $req->bindParam(':id', $id, PDO::PARAM_INT);
         $res=$req->execute();
-        $data = $req->fetch();
+        $data = $req->fetch(PDO::FETCH_ASSOC);
         return $data;
     }
     //Supprime un article a partir de son id
@@ -125,7 +125,7 @@
         $req->bindParam(':id_article', $id_article, PDO::PARAM_INT);
 		$req->bindParam(':id_user', $id_user, PDO::PARAM_INT);
         $res=$req->execute();
-        $data = $req->fetch();
+        $data = $req->fetch(PDO::FETCH_ASSOC);
 		if ($data['verif'] != 0){
 			return 1;
 		}
@@ -141,7 +141,7 @@
         $req->bindParam(':id_article', $id_article, PDO::PARAM_INT);
 		$req->bindParam(':id_user', $id_user, PDO::PARAM_INT);
         $res=$req->execute();
-        $data = $req->fetch();
+        $data = $req->fetch(PDO::FETCH_ASSOC);
 		if ($data['verif'] != 0){
 			return 1;
 		}
@@ -156,7 +156,7 @@
         $req = $mysqlConnection->prepare('SELECT count(*) as nbLike FROM liker WHERE id_article = :id');
         $req->bindParam(':id', $id, PDO::PARAM_INT);
         $res = $req->execute();
-        $data = $req->fetch();
+        $data = $req->fetch(PDO::FETCH_ASSOC);
         return $data;
     }
 
@@ -166,7 +166,7 @@
         $req = $mysqlConnection->prepare('SELECT count(*) as nbDislike FROM disliker WHERE id_article = :id');
         $req->bindParam(':id', $id, PDO::PARAM_INT);
         $res = $req->execute();
-        $data = $req->fetch();
+        $data = $req->fetch(PDO::FETCH_ASSOC);
         return $data;
     }
     

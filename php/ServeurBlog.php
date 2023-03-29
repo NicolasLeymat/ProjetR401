@@ -61,8 +61,8 @@
                 //Recuperation d'un article precis
                 }else if($http_type === "Art"){
                     $matchingData = get_content($headers['ID']);
-                    $author = array("author" => "".get_author($matchingData['id_utilisateur'])["identifiant"]);
-                    array_push($matchingData,$author);
+                    $author = get_author($matchingData['id_utilisateur'])["identifiant"];
+                    $matchingData["author"] = $author;
                 }else{
                     deliver_response(404, "demande inconnu", null);
                 }
