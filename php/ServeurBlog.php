@@ -7,8 +7,9 @@
     /// Paramétrage de l'entête HTTP (pour la réponse au Client)
     header("Content-Type:application/json");
 
-
+    $headers = getallheaders();
     $http_method = $_SERVER['REQUEST_METHOD'];
+    $http_type = $headers['REQUEST_TYPE'];
     if(!isset($_SESSION['id'])){
         session_start();
         session_regenerate_id()	;
@@ -28,6 +29,8 @@
             /// Cas de la méthode GET
             case "GET" :
                 /// Récupération des critères de recherche envoyés par le Client
+                //echo($_SERVER['REQUEST_TYPE']);
+                if($http_type === "Tab"){
                     $res = get_articles();
                     $matchingData = array();
                     foreach($res as $articles){
@@ -40,7 +43,9 @@
                             $a = array( "id_article" => $articles['id_article'],
                                         "Titre" => "".$articles['titre'],
                                         "NomAut" => "".$utilisateur['identifiant'],
-                                        "Publi" => "".$articles['date_publication']);
+                                        "Publi" => "".$articles['date_publication'],
+                                        "NbLike" => "#", 
+                                        "NbDislike" => "#");
                         }else{
                             $a = array( "id_article" => $articles['id_article'],
                             "Titre" => "".$articles['titre'],
@@ -49,11 +54,12 @@
                             "NbLike" => "".$nbLike['nbLike'], 
                             "NbDislike" => "".$nbDislike['nbDislike']);
                         }
-                        //Titre, NomAut, Publi, NbLike, NbDislike
                         
                         array_push($matchingData,$a); 
                     }
-
+                }else{
+                    $matchingData = get_content($headers['ID']);
+                }
 
                 /// Envoi de la réponse au Client
                 deliver_response(200, "Votre message", $matchingData);

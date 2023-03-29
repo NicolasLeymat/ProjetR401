@@ -43,7 +43,7 @@
               <label for="identifiant" class="label"> Identifiant : <br><input type="text" name="identifiant" id="id" class="form_input" placeholder="Identifiant"></label><br>
               <label for="pwd" class="label"> Mot de passe : <br><input type="text" name="pwd" id="pwd" class="form_input" placeholder="password"></label><br>
               <?php
-                if($_GET['error'] == true) {
+                if(isset($_GET["error"])) {
               ?>
                 <span class="error error--message">  Mot de passe ou identifiant incorrect  </span> </br>
               <?php
