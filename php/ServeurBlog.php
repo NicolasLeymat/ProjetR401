@@ -61,8 +61,12 @@
                 //Recuperation d'un article precis
                 }else if($http_type === "Art"){
                     $matchingData = get_content($headers['ID']);
+                    $nbDislike = count_dislike($headers['ID']);
+                    $nbLike = count_like($headers['ID']);
                     $author = get_author($matchingData['id_utilisateur'])["identifiant"];
                     $matchingData["author"] = $author;
+                    $matchingData["nb_dislike"] = $nbDislike;
+                    $matchingData["nb_like"] = $nbLike;
                 }else{
                     deliver_response(404, "demande inconnu", null);
                 }
