@@ -65,8 +65,8 @@
                     $nbLike = count_like($headers['ID']);
                     $author = get_author($matchingData['id_utilisateur'])["identifiant"];
                     $matchingData["author"] = $author;
-                    $matchingData["nb_dislike"] = $nbDislike;
-                    $matchingData["nb_like"] = $nbLike;
+                    $matchingData["nb_dislike"] = $nbDislike['nbDislike'];
+                    $matchingData["nb_like"] = $nbLike['nbLike'];
                 }else{
                     deliver_response(404, "demande inconnu", null);
                 }
