@@ -68,17 +68,17 @@
                     $matchingData["nb_dislike"] = $nbDislike['nbDislike'];
                     $matchingData["nb_like"] = $nbLike['nbLike'];
                 }else{
-                    deliver_response(404, "demande inconnu", null);
+                    deliver_response(404, "Demande inconnue", null);
                 }
 
                 /// Envoi de la réponse au Client
-                deliver_response(200, "Votre message", $matchingData);
+                deliver_response(200, "Recuperation des données voulu effectuer", $matchingData);
                 break;
             /// Cas de la méthode d'ajout d'un article
             case "POST" :
                 $postedData = file_get_contents('php://input');
                 $res = json_decode($postedData, true);
-                $commande = insert_article($res['titre'], $res['contenu'], $res['id_user']);
+                $commande = insert_article($res['titre'], $res['contenu'], $res['id_author']);
                 switch($commande){
                     case 1:
                         deliver_response(201, "Creation de l'article", NULL);
