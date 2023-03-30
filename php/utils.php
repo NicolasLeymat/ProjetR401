@@ -120,7 +120,7 @@
     //Verifie si l'utilisateur a liké ou non un article
 	function check_user_like_article($id_user, $id_article){
         include("bdConnect.php");
-        $req = $mysqlConnection->prepare("SELECT count(1) as verif FROM utilisateurs u, liker l, articles a WHERE
+        $req = $mysqlConnection->prepare("SELECT count(1) verif FROM utilisateur u, liker l, articles a WHERE
         a.id_article = l.id_article and l.id_utilisateur = u.id_utilisateur and a.id_article = :id_article and u.id_utilisateur = :id_user");
         $req->bindParam(':id_article', $id_article, PDO::PARAM_INT);
 		$req->bindParam(':id_user', $id_user, PDO::PARAM_INT);
