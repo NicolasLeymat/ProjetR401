@@ -60,38 +60,14 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-      <div class="footer_bg">
+        <div class="footer_bg">
         <div class="footer_container container grid">
-          <div>
-            <h1 class="footer_title">Nicolas</h1>
-            <span class="footer_subtitle">Développeur</span>
-          </div>
-
-          <ul class="footer_links">
-            <li>
-              <a href="#services" class="footer_link">Services</a>
-            </li>
-
-            <li>
-              <a href="#portfolio" class="footer_link">Portfolio</a>
-            </li>
-
-            <li>
-              <a href="#contact" class="footer_link">Contact Me</a>
-            </li>
-          </ul>
-
-          <div class="footer_socials">
-            <a href="" target="_blank" class="footer_social">
-              <i class="uil uil-facebook-f"></i>
-            </a>
-            <a href="" target="_blank" class="footer_social">
-              <i class="uil uil-instagram"></i>
-            </a>
-          </div>
+            <div>
+            <h1 class="footer_title">Sauce Blog</h1>
+            </div>
         </div>
-        <p class="footer_copy">&#169; Leymat. All rights reserved.</p>
-      </div>
+        <p class="footer_copy">&#169; Leymat & Veslin. All rights reserved.</p>
+        </div>
     </footer>
     <!-- FOOTER FIN -->
 

@@ -37,7 +37,7 @@
             }else{
                 $_SESSION['jwt'] = $jwt;
             }
-            echo $_SESSION['jwt'];
+            //echo $_SESSION['jwt'];
         }
         $token = $_SESSION['jwt'];
         $payloadSessionToken = get_payload($token);
@@ -131,7 +131,7 @@
                 </thead>
                 <tbody class="tbody">
                     <?php
-                        echo $token;
+                        //echo $token;
                         //var_dump($payloadSessionToken);
                         //var_dump($_SESSION['jwt']);
                         //var_dump(is_jwt_valid($_SESSION['jwt']));
@@ -140,7 +140,7 @@
                         stream_context_create(array('http' => array('method' => 'GET', 'header' => "Authorization: Bearer $token\r\n"."Content-Type: application/json\r\n"."REQUEST_TYPE: Tab\r\n"))) // ou DELETE
                         );
                         $data = json_decode($result, true);
-                        var_dump($data);
+                        //var_dump($data);
                         foreach($data['data'] as $articles){
                             $date = date_format(date_create($articles['Publi']),"Y/m/d H:i:s");
                     ?>
@@ -166,34 +166,10 @@
         <div class="footer_bg">
         <div class="footer_container container grid">
             <div>
-            <h1 class="footer_title">Sauce</h1>
-            <span class="footer_subtitle">Blog</span>
-            </div>
-
-            <ul class="footer_links">
-            <li>
-                <a href="#services" class="footer_link">Services</a>
-            </li>
-
-            <li>
-                <a href="#portfolio" class="footer_link">Portfolio</a>
-            </li>
-
-            <li>
-                <a href="#contact" class="footer_link">Contact Me</a>
-            </li>
-            </ul>
-
-            <div class="footer_socials">
-            <a href="" target="_blank" class="footer_social">
-                <i class="uil uil-facebook-f"></i>
-            </a>
-            <a href="" target="_blank" class="footer_social">
-                <i class="uil uil-instagram"></i>
-            </a>
+            <h1 class="footer_title">Sauce Blog</h1>
             </div>
         </div>
-        <p class="footer_copy">&#169; Leymat. All rights reserved.</p>
+        <p class="footer_copy">&#169; Leymat & Veslin. All rights reserved.</p>
         </div>
     </footer>
     <!-- FOOTER FIN -->
