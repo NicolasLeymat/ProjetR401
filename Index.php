@@ -29,7 +29,7 @@
         initialiserSessionInit();
         if($_SESSION['jwt'] == null || !is_jwt_valid($_SESSION['jwt'])){
             $headers = array('alg'=>'HS256', 'typ'=>'JWT');
-            $payload = array('id_utilisateur'=>-1, 'username'=>'Anonymous', 'role'=>'Anonymous', 'exp'=>(time()+3600));
+            $payload = array('id_utilisateur'=>-1, 'username'=>'Anonymous', 'role'=>'Anonymous', 'exp'=>(time()+7200));
             $jwt = generate_jwt($headers,$payload);
             if($_SESSION['jwt'] == null){
                 initialiserSession($jwt);
