@@ -93,7 +93,7 @@
                 /// Récupération des données envoyées par le Client
                 $postedData = file_get_contents('php://input');
                 $res = json_decode($postedData, true);
-                //echo $res['type'];
+                echo $res['type'];
                 switch($res['type']){
                     case 0:
                         $commande =  update_article($res['id_article'], $res['contenu']);
@@ -108,7 +108,11 @@
                         break;
                     case 1 : 
                         $commande = like($res['id_utilisateur'], $res['id_article']);
+                        echo $commande;
                         switch($commande){
+                            case 0:
+                                deliver_response(400, "like déjà effectuer", null);
+                                break;
                             case 1:
                                 deliver_response(201, "Like effectué", NULL);
                                 break;
