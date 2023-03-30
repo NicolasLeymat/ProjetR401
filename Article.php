@@ -89,61 +89,40 @@
     <main class="main">
         <!-- HOME -->
         <section class="home section" id="home">
-        <div class="home_container container flex vertical">
+        <div class="article">
             <!--Auteur, Date de publication, Titre, Contenu, Likes, Dislikes-->
-
-
             <?php
-                require("php/utils.php");
-
-                //$date = date('Y-m-d H:i:s');
-
-
-                //$res = insert_article(0,"ahahha","SDSDSD");
-                //echo $res;
-
-
-
-
-
-
+            $result = file_get_contents('http://localhost/ProjetR401/php/ServeurBlog.php',
+            true,
+            stream_context_create(array('http' => array('method' => 'GET', 'header' => "Authorization: Bearer $token\r\n" . 
+            "Content-Type: application/json\r\n". "REQUEST_TYPE: Art\r\n"."ID: ".$_GET['id']."\r\n"))) // ou DELETE
+            );
+            $data = json_decode($result, true); 
+            $resultat = $data['data'];
             ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            
+            <h1 class="titre"><?php echo ($resultat['titre']); ?></h1>
+            <p><?php echo ($resultat['contenu']); ?></p>
+            <br />
+            <div class="left">
+                <p><?php echo ($resultat['author']); ?></p>
+            </div>
+            <div class="right">
+                <p><?php echo ($resultat['date_publication']); ?></p>
+            </div>
+            <div style="clear: both;"></div>
+            <br />
+            
+            <a href=<?php echo "php/addLike.php?id=".$_GET['id']?>>
+                <div class="left">
+                    <p><i class="uil uil-thumbs-up"></i><?php echo ($resultat['nb_like']); ?></p>
+                </div>
+            </a>
+            <a href=<?php echo "php/addDislike.php?id=".$_GET['id']?>>
+                <div class="right">
+                    <p><i class="uil uil-thumbs-down"></i><?php echo ($resultat['nb_dislike']); ?></p>
+                </div>
+            </a>
 
 
 
@@ -162,34 +141,10 @@
         <div class="footer_bg">
         <div class="footer_container container grid">
             <div>
-            <h1 class="footer_title">Nicolas</h1>
-            <span class="footer_subtitle">Développeur</span>
-            </div>
-
-            <ul class="footer_links">
-            <li>
-                <a href="#services" class="footer_link">Services</a>
-            </li>
-
-            <li>
-                <a href="#portfolio" class="footer_link">Portfolio</a>
-            </li>
-
-            <li>
-                <a href="#contact" class="footer_link">Contact Me</a>
-            </li>
-            </ul>
-
-            <div class="footer_socials">
-            <a href="" target="_blank" class="footer_social">
-                <i class="uil uil-facebook-f"></i>
-            </a>
-            <a href="" target="_blank" class="footer_social">
-                <i class="uil uil-instagram"></i>
-            </a>
+            <h1 class="footer_title">Sauce Blog</h1>
             </div>
         </div>
-        <p class="footer_copy">&#169; Leymat. All rights reserved.</p>
+        <p class="footer_copy">&#169; Leymat & Veslin. All rights reserved.</p>
         </div>
     </footer>
     <!-- FOOTER FIN -->

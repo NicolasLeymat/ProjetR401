@@ -252,7 +252,7 @@
         if (check_user_like_article($id_user,$id_article) == 1){
             return 0;
         }
-		$res1 = delete_dislike($id_user, $id_article);
+		$res1 = delete_dislike($id_article, $id_user);
 		$res2 = add_like($id_user, $id_article);
         if ($res1 == 1 && $res2 == 1){
             return 1;
@@ -263,10 +263,10 @@
 	}
     //Ajoute un dislike si il n'existe pas déjà et enlève un like si il existe
 	function dislike($id_user, $id_article){
-        if (check_user_dislike_article($id_user,$id_article) == 0){
+        if (check_user_dislike_article($id_user,$id_article) == 1){
             return 0;
         }
-		$res1 = delete_like($id_user, $id_article);
+		$res1 = delete_like($id_article, $id_user);
 		$res2 = add_dislike($id_user, $id_article);
         if ($res1 == 1 && $res2 == 1){
             return 1;

@@ -644,3 +644,25 @@ tr[data-href]{
 .error--message{
   color: red;
 }
+
+.titre{
+  margin-right:auto !important;
+  margin-left: auto;
+  text-align:center;
+}
+
+.article{
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.left
+{
+  float: left;
+}
+
+.right
+{
+  float: right;
+}
