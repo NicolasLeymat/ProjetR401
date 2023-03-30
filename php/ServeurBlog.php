@@ -9,7 +9,6 @@
 
     $headers = getallheaders();
     $http_method = $_SERVER['REQUEST_METHOD'];
-    $http_type = $headers['REQUEST_TYPE'];
     if(!isset($_SESSION['id'])){
         session_start();
         session_regenerate_id()	;
@@ -28,6 +27,7 @@
         switch ($http_method){
             /// Cas de la méthode GET
             case "GET" :
+                $http_type = $headers['REQUEST_TYPE'];
                 /// Récupération des critères de recherche envoyés par le Client
                 //echo($_SERVER['REQUEST_TYPE']);
                 //Recuperation de tout les articles
@@ -93,7 +93,7 @@
                 /// Récupération des données envoyées par le Client
                 $postedData = file_get_contents('php://input');
                 $res = json_decode($postedData, true);
-                echo $res['type'];
+                //echo $res['type'];
                 switch($res['type']){
                     case 0:
                         $commande =  update_article($res['id_article'], $res['contenu']);
