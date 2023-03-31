@@ -88,7 +88,7 @@
         $req = $mysqlConnection->prepare("DELETE FROM disliker WHERE id_article = :id_article and id_utilisateur = :id_utilisateur");
         $req->bindParam(':id_article', $id_article, PDO::PARAM_INT);
         $req->bindParam(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
-		var_dump($req);
+		//var_dump($req);
         $res=$req->execute();
         if ($res == 1){
             return 1;
