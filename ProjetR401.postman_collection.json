@@ -1,0 +1,281 @@
+{
+	"info": {
+		"_postman_id": "ed7d0b49-867c-4e04-b083-d0a8c56b7af7",
+		"name": "ProjetR401",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26261682"
+	},
+	"item": [
+		{
+			"name": "Article précis",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91dGlsaXNhdGV1ciI6IjEiLCJ1c2VybmFtZSI6IkplYW4tcGF0cmljayIsInJvbGUiOiJQdWJsaXNoZXIiLCJleHAiOjE2ODAyODg3NDl9.772jx2OnZkVbiQN9eNNzqPBDWAvsKnYY7wPyiU9k_HM",
+						"type": "text"
+					},
+					{
+						"key": "REQUEST_TYPE",
+						"value": "Art",
+						"type": "text"
+					},
+					{
+						"key": "ID",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/ProjetR401/php/ServeurBlog.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ProjetR401",
+						"php",
+						"ServeurBlog.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tout les articles",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91dGlsaXNhdGV1ciI6IjEiLCJ1c2VybmFtZSI6IkplYW4tcGF0cmljayIsInJvbGUiOiJQdWJsaXNoZXIiLCJleHAiOjE2ODAyOTQxNDh9._Af0V9AFWH-Mj3NbLEDNaEt3ry1gXJJ4bNZretEuhew",
+						"type": "text"
+					},
+					{
+						"key": "REQUEST_TYPE",
+						"value": "Tab",
+						"type": "text"
+					},
+					{
+						"key": "ID",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/ProjetR401/php/ServeurBlog.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ProjetR401",
+						"php",
+						"ServeurBlog.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AjoutArticle",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91dGlsaXNhdGV1ciI6IjEiLCJ1c2VybmFtZSI6IkplYW4tcGF0cmljayIsInJvbGUiOiJQdWJsaXNoZXIiLCJleHAiOjE2ODAyODg3NDl9.772jx2OnZkVbiQN9eNNzqPBDWAvsKnYY7wPyiU9k_HM",
+						"type": "text"
+					},
+					{
+						"key": "REQUEST_TYPE",
+						"value": "Art",
+						"type": "text"
+					},
+					{
+						"key": "ID",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titre\": \"\",\r\n    \"contenu\": \"\",\r\n    \"id_author\":0\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/ProjetR401/php/ServeurBlog.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ProjetR401",
+						"php",
+						"ServeurBlog.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Like",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91dGlsaXNhdGV1ciI6IjEiLCJ1c2VybmFtZSI6IkplYW4tcGF0cmljayIsInJvbGUiOiJQdWJsaXNoZXIiLCJleHAiOjE2ODAyNDkzOTZ9.zzIbzIZjzrg6KdJRF3a_pdNm74jsFcPucfuEozRd7VU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_utilisateur\":1,\r\n    \"id_article\":0,\r\n    \"type\":1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/ProjetR401/php/ServeurBlog.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ProjetR401",
+						"php",
+						"ServeurBlog.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dislike",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91dGlsaXNhdGV1ciI6IjEiLCJ1c2VybmFtZSI6IkplYW4tcGF0cmljayIsInJvbGUiOiJQdWJsaXNoZXIiLCJleHAiOjE2ODAyNDkzOTZ9.zzIbzIZjzrg6KdJRF3a_pdNm74jsFcPucfuEozRd7VU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_utilisateur\":1,\r\n    \"id_article\":0,\r\n    \"type\":2\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/ProjetR401/php/ServeurBlog.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ProjetR401",
+						"php",
+						"ServeurBlog.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modification Article",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91dGlsaXNhdGV1ciI6IjEiLCJ1c2VybmFtZSI6IkplYW4tcGF0cmljayIsInJvbGUiOiJQdWJsaXNoZXIiLCJleHAiOjE2ODAyNDkzOTZ9.zzIbzIZjzrg6KdJRF3a_pdNm74jsFcPucfuEozRd7VU",
+						"type": "text"
+					},
+					{
+						"key": "REQUEST_TYPE",
+						"value": "Art",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "ID",
+						"value": "2",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_article\":1,\r\n    \"contenu\":\"\",\r\n    \"type\":0\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/ProjetR401/php/ServeurBlog.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ProjetR401",
+						"php",
+						"ServeurBlog.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Suppression Article",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91dGlsaXNhdGV1ciI6IjEiLCJ1c2VybmFtZSI6IkplYW4tcGF0cmljayIsInJvbGUiOiJQdWJsaXNoZXIiLCJleHAiOjE2ODAyNDkzOTZ9.zzIbzIZjzrg6KdJRF3a_pdNm74jsFcPucfuEozRd7VU",
+						"type": "text"
+					},
+					{
+						"key": "REQUEST_TYPE",
+						"value": "Art",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "ID",
+						"value": "2",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_article\":1,\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/ProjetR401/php/ServeurBlog.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ProjetR401",
+						"php",
+						"ServeurBlog.php"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

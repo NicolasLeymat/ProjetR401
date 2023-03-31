@@ -14,10 +14,7 @@
         session_regenerate_id()	;
     }
     $token = '';
-    //var_dump(getallheaders());
     $token = get_bearer_token();
-    //echo 'Chibre'.$token;
-
     if (!is_jwt_valid($token)){
         echo "La sauce n'est pas bonne : Token invalide";
     }

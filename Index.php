@@ -131,7 +131,7 @@
                 </thead>
                 <tbody class="tbody">
                     <?php
-                        //echo $token;
+                        echo $token;
                         //var_dump($payloadSessionToken);
                         //var_dump($_SESSION['jwt']);
                         //var_dump(is_jwt_valid($_SESSION['jwt']));
